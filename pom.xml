@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>otp1_inclass-u_pipeline_docker</artifactId>
+    <artifactId>OTP1_inclassAssignment3</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -50,7 +50,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>SVG_3012_Docker_Pipeline</mainClass> <!-- Correct main class -->
+                            <mainClass>TemperatureConverter</mainClass> <!-- Correct main class -->
                         </manifest>
                     </archive>
                 </configuration>
