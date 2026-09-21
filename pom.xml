@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>svg_3012_pipeline_docker</artifactId>
+    <artifactId>otp1_inclass-u_pipeline_docker</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
