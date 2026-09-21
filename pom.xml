@@ -49,9 +49,9 @@
                 <version>3.4.2</version>
                 <configuration>
                     <archive>
-                        <manifest>
-                            <mainClass>TemperatureConverter</mainClass> <!-- Correct main class -->
-                        </manifest>
+                        <!--<manifest>
+                            <mainClass>TemperatureConverter</mainClass>
+                        </manifest>-->
                     </archive>
                 </configuration>
             </plugin>
