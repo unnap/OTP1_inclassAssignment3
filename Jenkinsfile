@@ -3,6 +3,14 @@ pipeline {
     tools {
     maven "Maven3"
     }
+
+    environment{
+    PATH = "C:\\Users\\stres\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;${env.PATH}"
+    DOCKERHUB_CREDENTIALS_ID = "dockerID"
+    DOCKERHUB_REPO = "tunnap/otp1"
+    DOCKER_IMAGE_TAG = "latest"
+    }
+
     stages {
         stage("check"){
             steps{
@@ -24,5 +32,22 @@ pipeline {
                 jacoco()
             }
         }
+    stage("Build docker image"){
+        steps{
+            script{
+                docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+            }
+        }
+     }
+
+     stage("Push docker image to docker hub"){
+        steps{
+            script{
+                docker.withRegistry("https://index.docker.io/v1/",DOCKERHUB_CREDENTIALS_ID){
+                docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()}
+            }
+        }
+     }
+
     }
 }
