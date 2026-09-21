@@ -24,5 +24,10 @@ pipeline {
                 jacoco()
             }
         }
+        //stage("send email"){
+        //    steps{
+        //        emailTo: "mursu@murusu.fi"
+        //    }
+        //}
     }
 }
