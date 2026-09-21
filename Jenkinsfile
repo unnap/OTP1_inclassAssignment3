@@ -27,6 +27,15 @@ pipeline {
                 bat "mvn test"
             }
         }
+        stage('Code Coverage') {
+            steps {
+                bat 'mvn jacoco:report'
+                }
+            }
+        stage('Publish Test Results') {
+            steps {
+                junit '**/target/surefire-reports/*.xml'
+            }
         stage("jacoco"){
             steps{
                 jacoco()
@@ -40,14 +49,15 @@ pipeline {
         }
      }
 
-     stage("Push docker image to docker hub"){
+    stage("Push docker image to docker hub"){
         steps{
             script{
                 docker.withRegistry("https://index.docker.io/v1/",DOCKERHUB_CREDENTIALS_ID){
-                docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()}
+                docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
+                }
             }
         }
-     }
-
     }
+
+  }
 }
