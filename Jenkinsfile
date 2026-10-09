@@ -69,16 +69,16 @@ set "DB_PASSWORD=%TEST_DB_PASSWORD%"
 set "DB_ROOT_PASSWORD=%TEST_DB_PASSWORD%"
 set "DOCKER_IMAGE=%DOCKERHUB_REPO%:%BUILD_NUMBER%"
 
-docker compose -p otp1ci%BUILD_NUMBER% up -d --wait database
+docker-compose -p otp1ci%BUILD_NUMBER% up -d --wait database
 
 if errorlevel 1 goto cleanup
 
-docker compose -p otp1ci%BUILD_NUMBER% run --rm --no-deps app --check-db
+docker-compose -p otp1ci%BUILD_NUMBER% run --rm --no-deps app --check-db
 
 :cleanup
 set "RESULT=%ERRORLEVEL%"
 
-docker compose -p otp1ci%BUILD_NUMBER% down -v
+docker-compose -p otp1ci%BUILD_NUMBER% down -v
 
 exit /b %RESULT%
 '''
