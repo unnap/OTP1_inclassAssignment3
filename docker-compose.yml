@@ -1,0 +1,46 @@
+services:
+
+  database:
+    image: mariadb:11.4
+
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: temperature_db
+      MARIADB_USER: tempuser
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
+    healthcheck:
+      test:
+        - CMD
+        - healthcheck.sh
+        - --connect
+        - --innodb_initialized
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+
+    image: ${DOCKER_IMAGE:-temperature-converter:local}
+
+    depends_on:
+      database:
+        condition: service_healthy
+
+    environment:
+      DB_URL: jdbc:mariadb://database:3306/temperature_db
+      DB_USER: tempuser
+      DB_PASSWORD: ${DB_PASSWORD}
+      DISPLAY: host.docker.internal:0.0
+      JAVA_TOOL_OPTIONS: "-Dprism.order=sw"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  mariadb_data:
